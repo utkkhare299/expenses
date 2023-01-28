@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import classes from "./auth.module.css";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
   const emailInputRef = useRef();
@@ -93,6 +94,9 @@ const Signup = () => {
           >
             Create new account
           </button>
+          <p>
+            already have a account <Link to={"/"}> Login </Link>
+          </p>
         </div>
       </form>
     </section>
