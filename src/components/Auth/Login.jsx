@@ -4,15 +4,42 @@ import { useNavigate } from "react-router-dom";
 import classes from "./auth.module.css";
 import { AuthContext } from "../../context/authContext";
 
+
+
 const Login = () => {
   const { token, setToken } = useContext(AuthContext);
+  const navigate = useNavigate();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
   const [isLoading, setIsLoading] = useState(false);
   // const [token, setToken] = useState("");
+  const [show, setShow] = useState(false);
 
-  const navigate = useNavigate();
+  const sendEmail = async () => {
+    setIsLoading(true);
+    const email = emailInputRef.current.value;
+    const url =
+      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCCBbOKNdCKFTzfFaVssnidTzE7FXWbWxM";
+    const options = {
+      method: "POST",
+      body: JSON.stringify({
+        requestType: "PASSWORD_RESET",
+        email,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const res = await fetch(url, options);
+      const data = await res.json();
+      setIsLoading(false);
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -43,7 +70,7 @@ const Login = () => {
             return res.json();
           } else {
             return res.json().then(() => {
-              let errorMessage = "Login failed";
+              let errorMessage = "Login failed, Check your Credentials";
 
               throw new Error(errorMessage);
             });
@@ -68,30 +95,47 @@ const Login = () => {
           <label htmlFor="email">Your Email</label>
           <input type="email" id="email" required ref={emailInputRef} />
         </div>
-        <div className={classes.control}>
-          <label htmlFor="password">Your Password</label>
-          <input
-            type="password"
-            id="password"
-            required
-            ref={passwordInputRef}
-          />
-        </div>
+        {!show && (
+          <>
+            <div className={classes.control}>
+              <label htmlFor="password">Your Password</label>
+              <input
+                type="password"
+                id="password"
+                required
+                ref={passwordInputRef}
+              />
+            </div>
+            <div className={classes.actions}>
+              <p>
+                <a href="#" onClick={() => setShow((show) => !show)}>
+                  {" "}
+                  Forgot your Password ?
+                </a>
+              </p>
 
-        <div className={classes.actions}>
-          {isLoading && <p>Sending request...</p>}
-          <button
-            type="submit"
-            className={classes.toggle}
-            onClick={submitHandler}
-          >
-            Login
-          </button>
-
-          <p>
-            Or <Link to={"/Signup"}> signUp </Link>
-          </p>
-        </div>
+              {isLoading && <p>Sending request...</p>}
+              <button type="submit" className={classes.toggle}>
+                Login
+              </button>
+              <p>
+                Or <Link to={"/signup"}>Signup...</Link>
+              </p>
+            </div>
+          </>
+        )}
+        {show && (
+          <div className={classes.actions}>
+            {isLoading && <p>Sending request...</p>}
+            <button
+              type="button"
+              className={classes.toggle}
+              onClick={submitHandler}
+            >
+              Send Link
+            </button>
+          </div>
+        )}
       </form>
     </section>
   );

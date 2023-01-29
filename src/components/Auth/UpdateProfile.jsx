@@ -15,7 +15,7 @@ function UpdateProfile() {
 
   const getData = async () => {
     const url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBLAZfI3knkbyxNuEyi2t-QrjiOXbPCZVc";
+      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCCBbOKNdCKFTzfFaVssnidTzE7FXWbWxM";
     const options = {
       method: "POST",
       body: JSON.stringify({

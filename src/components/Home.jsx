@@ -8,7 +8,7 @@ function Home() {
 
   const handleClick = async () => {
     const url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyBLAZfI3knkbyxNuEyi2t-QrjiOXbPCZVc";
+      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCCBbOKNdCKFTzfFaVssnidTzE7FXWbWxM";
     const options = {
       method: "POST",
       body: JSON.stringify({
