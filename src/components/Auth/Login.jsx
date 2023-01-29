@@ -1,14 +1,16 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import classes from "./auth.module.css";
+import { AuthContext } from "../../context/authContext";
 
 const Login = () => {
+  const { token, setToken } = useContext(AuthContext);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [token, setToken] = useState("");
+  // const [token, setToken] = useState("");
 
   const navigate = useNavigate();
 

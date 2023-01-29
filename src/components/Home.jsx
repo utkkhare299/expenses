@@ -1,7 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import UpdateProfile from "./Auth/UpdateProfile";
 
 function Home() {
+  const [show, setShow] = useState(false);
   return (
     <>
       <div
@@ -12,10 +13,17 @@ function Home() {
         }}
       >
         <h1>Welcome to Expense Tracker</h1>
-        <p>
+        {/* <p>
           Your Profile is Incomplete. <Link to="/update">Complete Now</Link>
+        </p> */}
+        <p>
+          Your Profile is Incomplete.{" "}
+          <a href="#" onClick={() => setShow((prev) => !prev)}>
+            Complete Now
+          </a>
         </p>
       </div>
+      {show && <UpdateProfile />}
     </>
   );
 }
