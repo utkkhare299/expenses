@@ -1,10 +1,28 @@
-import { useState, useContext } from "react";
-import { AuthContext } from "../context/authContext";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { authActions } from "../store/auth";
 import UpdateProfile from "./Auth/UpdateProfile";
+import Expenses from "./Expense/Expenses";
 
 function Home() {
+  const navigate = useNavigate();
+
   const [show, setShow] = useState(false);
-  const { token } = useContext(AuthContext);
+  const token = useSelector((state) => state.auth.token);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    dispatch(authActions.logout());
+    navigate("/");
+  };
 
   const handleClick = async () => {
     const url =
@@ -41,6 +59,7 @@ function Home() {
           Your Profile is Incomplete. <Link to="/update">Complete Now</Link>
         </p> */}
         <button onClick={handleClick}>Verify Email</button>
+        <button onClick={handleLogout}>Logout</button>
         <p>
           Your Profile is Incomplete.{" "}
           <a href="#" onClick={() => setShow((prev) => !prev)}>
@@ -48,6 +67,7 @@ function Home() {
           </a>
         </p>
       </div>
+      <Expenses />
       {show && <UpdateProfile />}
     </>
   );

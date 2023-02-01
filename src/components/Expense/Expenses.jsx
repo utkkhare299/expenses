@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import ExpenseForm from "./ExpenseForm";
 import UpdateForm from "./UpdateForm";
+import { useDispatch, useSelector } from "react-redux";
 import { expensesActions } from "../../store/expenses";
 
 function Expenses() {
@@ -9,16 +9,13 @@ function Expenses() {
 
   const expenses = useSelector((state) => state.expense.expenses);
   const dispatch = useDispatch();
-
   const [show, setShow] = useState(false);
   const [id, setId] = useState("");
   const [data, setData] = useState({});
-
   let amount = 0;
   expenses.forEach((expense) => {
     amount += Number(expense.amount);
   });
-
   useEffect(() => {
     getExpenses();
   }, []);
@@ -70,7 +67,6 @@ function Expenses() {
       console.error(error);
     }
   };
-
   const deleteExpense = (id) => {
     fetch(
       `https://expense-d1606-default-rtdb.firebaseio.com/expense/${id}.json`,
@@ -86,7 +82,7 @@ function Expenses() {
 
   const editExpense = (expense, id) => {
     fetch(
-      `https://expense-d1606-default-rtdb.firebaseio.com/expense/${id}.json`,
+      ``,
       {
         method: "PATCH",
         body: JSON.stringify(expense),
@@ -99,14 +95,9 @@ function Expenses() {
       getExpenses();
     });
   };
-
   return (
     <>
-      {!show ? (
-        <ExpenseForm addExpense={addExpense} />
-      ) : (
-        <UpdateForm edit={editExpense} data={data} setShow={setShow} id={id} />
-      )}
+      <ExpenseForm addExpense={onAdd} />
       <h1
         style={{
           textTransform: "uppercase",
@@ -118,28 +109,15 @@ function Expenses() {
         {amount > 1000 ? <button className="btn">Activate Premium</button> : ""}
       </h1>
       <section className="expenses">
-        {expenses.length > 0 &&
-          expenses.map((item) => (
-            <article className="expense" key={item.id}>
-              <h2>{item.description}</h2>
-              <h3>{item.amount}</h3>
-              <p>{item.category}</p>
-              <div>
-                <button className="edit" onClick={() => getData(item.id)}>
-                  Edit
-                </button>
-                <button
-                  className="delete"
-                  onClick={() => deleteExpense(item.id)}
-                >
-                  Delete
-                </button>
-              </div>
-            </article>
-          ))}
+        {expenses.map((item) => (
+          <article className="expense" key={item.description}>
+            <h2>{item.description}</h2>
+            <h3>{item.amount}</h3>
+            <p>{item.category}</p>
+          </article>
+        ))}
       </section>
     </>
   );
 }
-
 export default Expenses;
