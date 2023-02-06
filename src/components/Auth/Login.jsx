@@ -19,7 +19,7 @@ const Login = () => {
     setIsLoading(true);
     const email = emailInputRef.current.value;
     const url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyCCBbOKNdCKFTzfFaVssnidTzE7FXWbWxM";
+    "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCCBbOKNdCKFTzfFaVssnidTzE7FXWbWxM";
     const options = {
       method: "POST",
       body: JSON.stringify({
