@@ -49,7 +49,10 @@
     color: #333;
     padding: 0.5rem 1.5rem;
     background-color: white;
-    border: 1px solid cornflowerblue;
+    border: 1px solid rgb(10, 10, 10);
   }
+  .actions a {
+    color: hsl(300, 80%, 20%);
+  }  
   
   

@@ -1,20 +1,30 @@
 body {
-    margin: 0;
-    background-color: #141515;
-    color: whitesmoke;
+  margin: 0;
+}
+
+body.dark {
+  background-color: #141515;
+  color: white;
+}
+
+a {
+  margin-right: .5rem;
+  color: cornflowerblue;
 }
 
 .form {
-    display: flex;
-    max-width: 700px;
-    gap: 6rem;
-    margin: 2rem auto;
+  display: flex;
+  max-width: 700px;
+  gap: 6rem;
+  margin: 2rem auto;
 }
+
 .delete {
-    background-color: red;
-    color: white;
-  }
-  .edit {
-    color: white;
-    background-color: green;
-  }
+  background-color: red;
+  color: white;
+}
+
+.edit {
+  color: white;
+  background-color: green;
+}

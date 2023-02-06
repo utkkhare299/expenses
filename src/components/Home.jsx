@@ -4,22 +4,25 @@ import { useNavigate } from "react-router-dom";
 import { authActions } from "../store/auth";
 import UpdateProfile from "./Auth/UpdateProfile";
 import Expenses from "./Expense/Expenses";
+import { themeActions } from "../store/theme";
 
 function Home() {
   const navigate = useNavigate();
 
   const [show, setShow] = useState(false);
-  const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!token) {
+    if (!user) {
       navigate("/login");
     }
   }, []);
-
+  const onClick = () => {
+    dispatch(themeActions.darkMode());
+  };
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
     dispatch(authActions.logout());
     navigate("/");
   };
@@ -31,7 +34,7 @@ function Home() {
       method: "POST",
       body: JSON.stringify({
         requestType: "VERIFY_EMAIL",
-        idToken: token,
+        idToken: user.idToken,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -66,9 +69,10 @@ function Home() {
             Complete Now
           </a>
         </p>
+        <button onClick={onClick}>Toggle Theme</button>
       </div>
-      <Expenses />
       {show && <UpdateProfile />}
+      <Expenses />
     </>
   );
 }

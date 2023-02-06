@@ -4,8 +4,17 @@ import Signup from "./components/Auth/Signup";
 import Login from "./components/Auth/Login";
 import Home from "./components/Home";
 import "./App.css";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 function App() {
+  const isDark = useSelector((state) => state.theme.isDark);
+
+  useEffect(() => {
+    !isDark
+      ? (document.body.className = "dark")
+      : (document.body.className = "");
+  }, [isDark]);
   return (
     <div className="App">
       <Routes>
